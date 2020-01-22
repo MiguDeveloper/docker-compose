@@ -33,5 +33,30 @@ services:
             - servicio-config-server
             - servicio-eureka-server
             - microservicios-mysql8
+    servicio-item:
+        image: servicio-item:v1
+        ports: 
+            - "8002:8002"
+            - "8005:8005"
+            - "8007:8007"
+        restart: always
+        networks: 
+          - springcloud
+        depends_on: 
+            - servicio-config-server
+            - servicio-eureka-server
+            - servicio-productos
+    servicio-zuul-server:
+        image: servicio-zuul-server:v1
+        ports: 
+            - "8090:8090"
+        restart: always
+        networks: 
+          - springcloud
+        depends_on: 
+            - servicio-config-server
+            - servicio-eureka-server
+            - servicio-productos
+            - servicio-item
 networks: 
     springcloud:
