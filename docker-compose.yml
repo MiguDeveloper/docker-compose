@@ -14,5 +14,24 @@ services:
         restart: always
         networks: 
           - springcloud
+    microservicios-mysql8:
+        image: mysql:8
+        ports: 
+          - "3306:3306"
+        restart: always
+        networks: 
+          - springcloud
+        environment: 
+            MYSQL_DATABASE: db_springboot_cloud
+            MYSQL_ROOT_PASSWORD: znfmdyRootMysql
+    servicio-productos:
+        image: servicio-productos:v1
+        restart: always
+        networks: 
+          - springcloud
+        depends_on: 
+            - servicio-config-server
+            - servicio-eureka-server
+            - microservicios-mysql8
 networks: 
     springcloud:
